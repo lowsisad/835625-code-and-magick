@@ -1,23 +1,39 @@
 'use strict';
 
-window.renderStatistics = function (ctx, names, times) {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(110, 20, 420, 270);
+var CLOUD_WIDTH = 420;
+var CLOUD_HEIGHT = 270;
+var Gap = 90;
+var TextX = 150;
+var TextY = 30;
+var RectX = 190;
+var RectY = 250;
+var RECT_WIDTH = 420;
+var RECT_HEIGHT = 270;
 
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(100, 10, 420, 270);
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', 150, 30);
-  ctx.fillText('Список результатов:', 150, 50);
+var renderCloud = function (ctx, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+};
 
-  var max = 0;
-  for (var i = 0; i < times.length; i++) {
-    if (max < times[i]) {
-      max = times[i];
+var getMaxElement = function (arr) {
+  if (arr === []) {
+    return 0;
+  } else {
+    var max = 0;
+    for (var i = 0; i < arr.length; i++) {
+      if (max < arr[i]) {
+        max = arr[i];
+      }
     }
+    max = Math.round(max);
+    return max;
   }
-  max = Math.round(max);
+};
+
+window.renderStatistics = function (ctx, names, times) {
+  renderCloud(ctx, 110, 20, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, 100, 10, '#fff');
+
   for (var n = 0; n < times.length; n++) {
     if (names[n] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
@@ -25,10 +41,15 @@ window.renderStatistics = function (ctx, names, times) {
       var color = Math.random();
       ctx.fillStyle = 'rgba(0, 0, 255,' + color + ' )';
     }
+    var bestplayer = getMaxElement(times);
+    ctx.fillRect(RectX + n * Gap, RectY, RECT_WIDTH - 460, -((RECT_HEIGHT - 120) * times[n]) / bestplayer);
 
-    ctx.fillText(names[n], 150 + n * 90, 80);
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.font = '16px PT Mono';
+    ctx.fillText(Math.round(times[n]), TextX + n * Gap, TextY + 240);
+    ctx.fillText('Ура вы победили!', TextX, TextY);
+    ctx.fillText('Список результатов:', TextX, TextY + 20);
+    ctx.fillText(names[n], TextX + n * Gap, TextY + 50);
 
-    ctx.fillRect(190 + n * 90, 250, -40, -(150 * times[n]) / max);
-    ctx.fillText(Math.round(times[n]), 150 + n * 90, 270);
   }
 };

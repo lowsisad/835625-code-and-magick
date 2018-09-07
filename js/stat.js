@@ -2,13 +2,16 @@
 
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
-var Gap = 90;
-var TextX = 150;
-var TextY = 30;
-var RectX = 190;
-var RectY = 250;
-var RECT_WIDTH = 420;
-var RECT_HEIGHT = 270;
+var GAP = 90;
+var TEXTX = 150;
+var TEXTYFIRST = 30;
+var TEXTYSECOND = 50;
+var TEXTTIMES = 270;
+var TEXTNAMES = 80;
+var RECTX = 190;
+var RECTY = 250;
+var RECT_WIDTH = -40;
+var RECT_HEIGHT = 150;
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -16,8 +19,7 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  if (arr === []) {
-    return 0;
+  if (arr === [] ){
   } else {
     var max = 0;
     for (var i = 0; i < arr.length; i++) {
@@ -25,31 +27,43 @@ var getMaxElement = function (arr) {
         max = arr[i];
       }
     }
-    max = Math.round(max);
     return max;
   }
 };
+var bestplayer;
+var getGistogram = function (ctx, names, times) {
 
-window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, 110, 20, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, 100, 10, '#fff');
-
+  var bestplayer = getMaxElement(times);
   for (var n = 0; n < times.length; n++) {
     if (names[n] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
-      var color = Math.random();
-      ctx.fillStyle = 'rgba(0, 0, 255,' + color + ' )';
+      ctx.fillStyle = 'rgba(0, 0, 255,' + Math.random() + ' )';
     }
-    var bestplayer = getMaxElement(times);
-    ctx.fillRect(RectX + n * Gap, RectY, RECT_WIDTH - 460, -((RECT_HEIGHT - 120) * times[n]) / bestplayer);
+    ctx.fillRect(RECTX + n * GAP, RECTY, RECT_WIDTH, -((RECT_HEIGHT) * times[n]) / bestplayer);
 
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
     ctx.font = '16px PT Mono';
-    ctx.fillText(Math.round(times[n]), TextX + n * Gap, TextY + 240);
-    ctx.fillText('Ура вы победили!', TextX, TextY);
-    ctx.fillText('Список результатов:', TextX, TextY + 20);
-    ctx.fillText(names[n], TextX + n * Gap, TextY + 50);
-
+    ctx.fillText(Math.round(times[n]), TEXTX + n * GAP, TEXTTIMES);
+    ctx.fillText(names[n], TEXTX + n * GAP, TEXTNAMES);
   }
+};
+
+var getText = function (ctx, word) {
+  var textgap = 0;
+  for (var n = 0; n < word.length; n++) {
+
+    ctx.fillText(word[n], TEXTX, TEXTYFIRST + textgap);
+    textgap +=30;
+  }
+}
+
+window.renderStatistics = function (ctx, names, times) {
+  console.log(bestplayer);
+  renderCloud(ctx, 110, 20, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, 100, 10, '#fff');
+
+  getGistogram(ctx, names, times);
+  var words = ['Ура вы победили!','Список результатов:'];
+  getText (ctx, words);
 };

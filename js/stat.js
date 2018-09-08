@@ -5,7 +5,6 @@ var CLOUD_HEIGHT = 270;
 var GAP = 90;
 var TEXTX = 150;
 var TEXTYFIRST = 30;
-var TEXTYSECOND = 50;
 var TEXTTIMES = 270;
 var TEXTNAMES = 80;
 var RECTX = 190;
@@ -19,20 +18,17 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  if (arr === [] ){
-  } else {
+  if (arr !== []) {
     var max = 0;
     for (var i = 0; i < arr.length; i++) {
       if (max < arr[i]) {
         max = arr[i];
       }
     }
-    return max;
   }
+  return max;
 };
-var bestplayer;
 var getGistogram = function (ctx, names, times) {
-
   var bestplayer = getMaxElement(times);
   for (var n = 0; n < times.length; n++) {
     if (names[n] === 'Вы') {
@@ -54,16 +50,16 @@ var getText = function (ctx, word) {
   for (var n = 0; n < word.length; n++) {
 
     ctx.fillText(word[n], TEXTX, TEXTYFIRST + textgap);
-    textgap +=30;
+    textgap += 30;
   }
-}
+};
 
 window.renderStatistics = function (ctx, names, times) {
-  console.log(bestplayer);
+
   renderCloud(ctx, 110, 20, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, 100, 10, '#fff');
 
   getGistogram(ctx, names, times);
-  var words = ['Ура вы победили!','Список результатов:'];
-  getText (ctx, words);
+  var words = ['Ура вы победили!', 'Список результатов:'];
+  getText(ctx, words);
 };

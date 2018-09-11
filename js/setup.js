@@ -15,28 +15,20 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
     .querySelector('.setup-similar-item');
 
-var wizards = [
-  {
+var getWizards = function () {
+  var arr = {
     name: wizardFirstName[Math.floor(Math.random() * (wizardFirstName.length))] + ' ' + wizardSecondName[Math.floor(Math.random() * (wizardSecondName.length))],
     coatColor: colorOfCoat[Math.floor(Math.random() * (colorOfCoat.length))],
     colorOfEyes: eyesColor[Math.floor(Math.random() * (eyesColor.length))]
-  },
-  {
-    name: wizardFirstName[Math.floor(Math.random() * (wizardFirstName.length))] + ' ' + wizardSecondName[Math.floor(Math.random() * (wizardSecondName.length))],
-    coatColor: colorOfCoat[Math.floor(Math.random() * (colorOfCoat.length))],
-    colorOfEyes: eyesColor[Math.floor(Math.random() * (eyesColor.length))]
-  },
-  {
-    name: wizardFirstName[Math.floor(Math.random() * (wizardFirstName.length))] + ' ' + wizardSecondName[Math.floor(Math.random() * (wizardSecondName.length))],
-    coatColor: colorOfCoat[Math.floor(Math.random() * (colorOfCoat.length))],
-    colorOfEyes: eyesColor[Math.floor(Math.random() * (eyesColor.length))]
-  },
-  {
-    name: wizardFirstName[Math.floor(Math.random() * (wizardFirstName.length))] + ' ' + wizardSecondName[Math.floor(Math.random() * (wizardSecondName.length))],
-    coatColor: colorOfCoat[Math.floor(Math.random() * (colorOfCoat.length))],
-    colorOfEyes: eyesColor[Math.floor(Math.random() * (eyesColor.length))]
-  }
-];
+  };
+  return arr;
+};
+
+var wizards = [];
+for (var i = 0; i < 4; i++) {
+  var newArr = getWizards();
+  wizards[wizards.length] = newArr;
+}
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -48,8 +40,11 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
+
+for (i = 0; i < wizards.length; i++) {
+
   fragment.appendChild(renderWizard(wizards[i]));
 }
 similarListElement.appendChild(fragment);

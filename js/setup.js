@@ -11,19 +11,24 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
     .querySelector('.setup-similar-item');
 
-var getWizards = function () {
-  var arr = {
-    name: wizardFirstName[Math.floor(Math.random() * (wizardFirstName.length))] + ' ' + wizardSecondName[Math.floor(Math.random() * (wizardSecondName.length))],
-    coatColor: colorOfCoat[Math.floor(Math.random() * (colorOfCoat.length))],
-    colorOfEyes: eyesColor[Math.floor(Math.random() * (eyesColor.length))]
-  };
-  return arr;
+var getElement = function (someElement) {
+  var random = someElement[Math.floor(Math.random() * (someElement.length))];
+  return random;
 };
 
-var wizards = [];
+var getWizard = function () {
+  var newWizard = {
+    name: getElement(wizardFirstName) + ' ' + getElement(wizardSecondName),
+    coatColor: getElement(colorOfCoat),
+    colorOfEyes: getElement(eyesColor)
+  };
+  return newWizard;
+};
+
+var wizard = [];
 for (var i = 0; i < 4; i++) {
-  var newArr = getWizards();
-  wizards[wizards.length] = newArr;
+  var newArr = getWizard();
+  wizard.push(newArr);
 }
 
 var renderWizard = function (wizard) {
@@ -39,9 +44,9 @@ var renderWizard = function (wizard) {
 
 var fragment = document.createDocumentFragment();
 
-for (i = 0; i < wizards.length; i++) {
+for (i = 0; i < wizard.length; i++) {
 
-  fragment.appendChild(renderWizard(wizards[i]));
+  fragment.appendChild(renderWizard(wizard[i]));
 }
 similarListElement.appendChild(fragment);
 

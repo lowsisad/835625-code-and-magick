@@ -31,12 +31,12 @@ for (var i = 0; i < 4; i++) {
   wizard.push(newArr);
 }
 
-var renderWizard = function (wizard) {
+var renderWizard = function (protoWizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorOfEyes;
+  wizardElement.querySelector('.setup-similar-label').textContent = protoWizard.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = protoWizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = protoWizard.colorOfEyes;
 
   return wizardElement;
 };

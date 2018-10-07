@@ -80,6 +80,7 @@ colorEye.addEventListener('click', function () {
 });
 
 var clickMyCoat = 0;
+
 colorCoat.addEventListener('click', function () {
   clickMyCoat = clickMyCoat + 1;
   if (clickMyCoat === 6) {
@@ -102,6 +103,7 @@ var openPopup = function () {
 var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
+  document.querySelector('.setup').style = '';
 };
 
 setupOpen.addEventListener('click', function () {
